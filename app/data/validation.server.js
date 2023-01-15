@@ -1,17 +1,17 @@
-function isValidTitle(value) {
+const isValidTitle = (value) => {
     return value && value.trim().length > 0 && value.trim().length <= 30;
 }
 
-function isValidAmount(value) {
+const isValidAmount = (value) => {
     const amount = parseFloat(value);
     return !isNaN(amount) && amount > 0;
 }
 
-function isValidDate(value) {
+const isValidDate = (value) => {
     return value && new Date(value).getTime() < new Date().getTime();
 }
 
-export function validateExpenseInput(input) {
+export const validateExpenseInput = (input) => {
     let validationErrors = {};
 
     if (!isValidTitle(input.title)) {
