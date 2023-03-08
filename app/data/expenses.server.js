@@ -10,8 +10,7 @@ export const addExpense = async (expenseData) => {
 			},
 		});
 	} catch (error) {
-		console.log(error);
-		throw error;
+		throw new Error("Faild to add expense.");
 	}
 };
 
@@ -24,20 +23,18 @@ export const getExpenses = async () => {
 		});
 		return expenses;
 	} catch (error) {
-		console.log(error);
-		throw error;
+		throw new Error("Faild to get expenses.");
 	}
 };
 
-// export const getExpense = async (id) => {
-// 	try {
-// 		const expense = await prisma.expense.findFirst({ where: { id } });
-// 		return expense;
-// 	} catch (error) {
-// 		console.log(error);
-// 		throw error;
-// 	}
-// };
+export const getExpense = async (id) => {
+	try {
+		const expense = await prisma.expense.findFirst({ where: { id } });
+		return expense;
+	} catch (error) {
+		throw new Error("Faild to get expense.");
+	}
+};
 
 export const updateExpense = async (id, expenseData) => {
 	try {
@@ -50,8 +47,7 @@ export const updateExpense = async (id, expenseData) => {
 			},
 		});
 	} catch (error) {
-		console.log(error);
-		throw error;
+		throw new Error("Faild to update expense.");
 	}
 };
 
@@ -59,7 +55,6 @@ export const deleteExpense = async (id) => {
 	try {
 		await prisma.expense.delete({ where: { id } });
 	} catch (error) {
-		console.log(error);
-		throw error;
+		throw new Error("Faild to delete expense.");
 	}
 };

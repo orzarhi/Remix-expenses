@@ -7,16 +7,21 @@ import {
 	useTransition as useNavigation,
 } from "@remix-run/react";
 
-function ExpenseForm() {
+const ExpenseForm = () => {
 	const today = new Date().toISOString().slice(0, 10);
 	const validationErrors = useActionData();
 	const params = useParams();
 	const navigation = useNavigation();
 	const matches = useMatches();
-	const expenses = matches.find(
+
+	const expenses = matches?.find(
 		(match) => match.id === "routes/__app/expenses"
 	).data;
 	const expenseData = expenses.find((expense) => expense.id === params.id);
+
+	if (params.id && !expenseData) {
+		return <p>Invaild expense id.</p>;
+	}
 
 	const defaultValues = expenseData
 		? {
@@ -94,6 +99,6 @@ function ExpenseForm() {
 			</div>
 		</Form>
 	);
-}
+};
 
 export default ExpenseForm;

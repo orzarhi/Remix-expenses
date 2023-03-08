@@ -6,6 +6,8 @@ import { getExpenses } from "~/data/expenses.server";
 export default function ExpensesLayout() {
 	const expenses = useLoaderData();
 
+	const hasExpenses = expenses && expenses.length > 0;
+
 	return (
 		<>
 			<Outlet />
@@ -20,12 +22,21 @@ export default function ExpensesLayout() {
 						<span>Load Raw Data</span>
 					</a>
 				</section>
-				<ExpensesList expenses={expenses} />
+				{hasExpenses ? (
+					<ExpensesList expenses={expenses} />
+				) : (
+					<section id="no-expenses">
+						<h1>No expenses found</h1>
+						<p>
+							Start <Link to="add">adding some</Link>today.
+						</p>
+					</section>
+				)}
 			</main>
 		</>
 	);
 }
 
-export const loader = () => {
-	return getExpenses();
+export const loader = async () => {
+	return await getExpenses();
 };
