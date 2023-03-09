@@ -2,6 +2,7 @@ import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { FaDownload, FaPlus } from "react-icons/fa";
 import ExpensesList from "~/components/expenses/ExpensesList";
 import { getExpenses } from "~/data/expenses.server";
+import { requireUserSession } from "~/services/cookiesService";
 
 export default function ExpensesLayout() {
 	const expenses = useLoaderData();
@@ -37,6 +38,8 @@ export default function ExpensesLayout() {
 	);
 }
 
-export const loader = async () => {
-	return await getExpenses();
+export const loader = async ({ request }) => {
+	const userId = await requireUserSession(request);
+
+	return await getExpenses(userId);
 };
