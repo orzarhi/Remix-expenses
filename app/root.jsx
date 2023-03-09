@@ -7,6 +7,7 @@ import {
 	Scripts,
 	ScrollRestoration,
 	useCatch,
+	useMatches,
 } from "@remix-run/react";
 
 import sharedStyles from "~/styles/shared.css";
@@ -14,22 +15,25 @@ import Error from "./components/util/Error";
 
 export const meta = () => ({
 	charset: "utf-8",
-	title: "New Remix App",
+	title: "Remix Expenses",
 	viewport: "width=device-width,initial-scale=1",
 });
 
 const Document = ({ title, children }) => {
+	const matches = useMatches();
+
+	const disableJs = matches.some((match) => match.handle?.disableJs);
 	return (
 		<html lang="en">
 			<head>
-				<title>{title}</title>
+				{title && <title>{title}</title>}
 				<Meta />
 				<Links />
 			</head>
 			<body>
 				{children}
 				<ScrollRestoration />
-				<Scripts />
+				{!disableJs && <Scripts />}
 				<LiveReload />
 			</body>
 		</html>

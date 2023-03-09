@@ -38,3 +38,14 @@ export const action = async ({ params, request }) => {
 		return redirect("..");
 	}
 };
+
+export const meta = ({ params, location, data, parentsData }) => {
+	const expense = parentsData["routes/__app/expenses"].find(
+		(expense) => expense.id === params.id
+	);
+
+	return {
+		title: expense.title,
+		description: "Update expense.",
+	};
+};
